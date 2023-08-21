@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState} from "react";
+// import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import Register from "./Components/Register";
+import Login from "./Components/Login";
+import ChatSideBar from "./Components/ChatSideBar";
+import ChatScreen from "./Components/Chatscreen";
 
 function App() {
+  // const [messages,setMessage]=useState([])
+  const [name,setName]=useState('')
+  
+  const getMessage=(name)=>{
+    // console.log(name)
+    setName(name)
+    // setMessage(message)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+   
+    
+    <div className="flex-1">
+      {/* <Register />
+      <Login /> */}
+      <div className="flex space-x-5">
+      <ChatSideBar onPress={getMessage} />
+      <ChatScreen name={name}/>
+      </div>
     </div>
+   
   );
 }
 
