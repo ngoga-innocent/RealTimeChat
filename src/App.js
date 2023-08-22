@@ -11,7 +11,7 @@ function App() {
   const [name, setName] = useState('');
   const [name1, setName1] = useState('');
   const [isLogged, setIsLogged] = useState(true);
-
+  const[ispressed,setPressed]=useState(false)
   useEffect(() => {
     const logged = cookies.get('token');
     if(logged == null){
@@ -24,8 +24,9 @@ function App() {
     }
   }, []);
 
-  const getMessage = (name) => {
+  const getMessage = (name,pressed) => {
     setName(name);
+    setPressed(pressed)
   };
 
   const getName = (name1, logged) => {
@@ -46,7 +47,7 @@ function App() {
             <Route path="/" element={<ChatContainer name={name} name1={name1} getMessage={getMessage} />} />
           )} */}
           <Route path="/login" element={<Login getName={getName} />} />
-          <Route path="/" element={isLogged? <ChatContainer name={name} name1={name1} getMessage={getMessage} /> :<Navigate to="/login" />} />
+          <Route path="/" element={isLogged? <ChatContainer name={name} name1={name1} ispressed={ispressed} getMessage={getMessage} /> :<Navigate to="/login" />} />
         </Routes>
       </div>
     </Router>
@@ -54,10 +55,10 @@ function App() {
 }
 
 // Create a separate component for the chat container
-const ChatContainer = ({ name, name1, getMessage }) => (
+const ChatContainer = ({ name, name1, getMessage,ispressed }) => (
   <div className="flex space-x-5">
     <ChatSideBar onPress={getMessage} user={name1} />
-    <ChatScreen name={name} />
+  {ispressed && <ChatScreen name={name} />}
   </div>
 );
 

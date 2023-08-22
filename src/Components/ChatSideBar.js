@@ -41,7 +41,8 @@ const ChatSideBar = (props) => {
     const onPress=(name)=>{
         
         const username=name
-        props.onPress(username)
+        props.onPress(username,true)
+
         // const messages=chatList.filter(message=>{
         //     message.index=index
         // })
