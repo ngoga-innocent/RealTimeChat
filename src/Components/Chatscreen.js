@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import { db } from "../firebase-config";
 import 'firebase/database'
-import { getDatabase,onValue,ref,set } from "firebase/database";
+import { getDatabase,onValue,ref,set,update } from "firebase/database";
 import { v4 as uuidv4 } from 'uuid';
 const ChatScreen = (props) => {
   //  const message=props
@@ -22,8 +22,16 @@ const ChatScreen = (props) => {
           key,
           ...value
         }));
-        //  console.log(messageList[0].newMessage)
-        setMessages(messageList)
+         console.log(messageList[0].newMessage.createdAt)
+        
+        const sortedMessages = messageList.sort((a, b) => {
+          const dateA = new Date(a.newMessage.createdAt);
+          const dateB = new Date(b.newMessage.createdAt);
+          return dateA - dateB;
+        });
+        
+        setMessages(sortedMessages);
+      
       }else{
         setMessages([])
       }
@@ -45,7 +53,7 @@ const ChatScreen = (props) => {
         _id: Math.random().toString(),
         text: msg,
         lastmsg: msg,
-        createdAt: new Date(),
+        createdAt: new Date().toISOString(),
         user: {
           _id:  2 // Your user ID
         },
@@ -54,7 +62,9 @@ const ChatScreen = (props) => {
     setMsg('')
   }
   }
-  
+  // const sortedMessages = [...messages].sort(
+  //   (a, b) => new Date(a.newMessage.createdAt) - new Date(b.newMessage.createdAt)
+  // );
   return (
     <div className="w-full items-center justify-center ">
     <h1 className="text-white font-bold text-3xl items-center justify-center self-center">{name}</h1>
@@ -69,8 +79,8 @@ const ChatScreen = (props) => {
             
               {
                 userId ===2 ? (
-                  <div className="py-2 bg-transparent border-2 px-7 rounded-lg mb-2  ml-56">
-                    <p>{item.newMessage.text}</p>
+                  <div className="py-2 bg-transparent border-2 px-7 rounded-lg mb-2  ml-64 justify-center">
+                    <p className='self-end'>{item.newMessage.text}</p>
                   </div>
                 ) : (
                   <div className="py-2  border-2 px-7 rounded-lg mb-2 bg-teal-950 items-center justify-center">

@@ -44,7 +44,7 @@ const RegisterUser=(e)=>{
             <button type='submit' className=" rounded-md bg-white py-3 font-bold">Register</button>
            </form>
            <span>
-            <a href="login">Login here</a>
+            <a href="/login">Login here</a>
            </span>
            </div>
         </div>
